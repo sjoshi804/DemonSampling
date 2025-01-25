@@ -1,0 +1,29 @@
+Scenario: {scenario}
+
+You are presented with two images generated from the prompt "{prompt}." Examine both images carefully to decide which one best matches the given scenario. Consider how each image relates to the scenario, including its relevance and how well it captures the intended theme and concept.
+
+Choose the image that you believe is the most appropriate for the scenario. Each image has an id: 0 or 1.
+
+Respond with the id of the image you've chosen in a JSON format. For example, if you choose the first image, your response should look like this:
+
+```json
+[0]
+```
+
+Or, if you choose the second image:
+
+```json
+[1]
+```
+
+Please response in the following format:
+
+```
+{{
+    "justification": "Your justification here",
+    "chosen_image": [0 or 1] # Either [0] or [1]
+}}
+```
+Take a deep breath and work on this problem step-by-step. Ensure your choice truly aligns with the intended scenario.
+
+
