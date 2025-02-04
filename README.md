@@ -57,9 +57,46 @@ pip install -e .
 
 ## Usage
 
+### Custom Implementations
+
+Develop your own pipeline by subclassing the `DemonGenerater` abstract class. Override the `rewards` method to integrate your custom reward function (i.e., mapping a list of PIL images to reward scores). 
+
+```python
+class YourRewardGenerator(DemonGenerater):
+    def rewards(self, pils):
+        """
+        Implement your custom reward function here.
+        """
+        return your_reward_function(pils)
+...
+
+generator = YourRewardGenerator(
+        beta=0.1,
+        tau="adaptive",
+        K=K,
+        T=T,
+        demon_type="tanh", # or "boltzmann", "optimal"
+        r_of_c="baseline", # or "consistency"
+        c_steps=20, # Meaningful only when r_of_c="baseline" 
+        ode_after=0.11, # Recommended value for Stable Diffusion 
+        cfg=cfg, # Recommended value in (0, 5]
+        save_pils=True,
+        experiment_directory="experiments/your_experiment",
+    )
+generator.generate(prompt=text)
+```
+
+See the examples in `pipelines/vllm_generate.py` and `pipelines/choose_generate.py` for examples.
+
 ### Running Provided Pipelines
 
 The repository includes several example pipelines that demonstrate Sampling Demon in action. These pipelines illustrate how to align diffusion models with user preferences using various reward functions.
+
+#### Running Aesthetics Animal Pipeline
+This pipeline reproduces the results of the Aesthetics Animal Evaluation experiment on the paper (Please refer to the paper for configuration guidelines):
+```
+python3 pipelines/aesthetic_animal_eval.py  --r_of_c "consistency"
+```
 
 #### Running VLM as Demon Pipeline
 
@@ -76,10 +113,6 @@ Interact with the algorithm via the manual selection pipeline, which provides a 
 ```bash
 python pipelines/choose_generate.py --text "A boulder in elevator" --K 16 --T 128
 ```
-
-### Custom Implementations
-
-Develop your own pipeline by subclassing the `DemonGenerater` abstract class. Override the `rewards` method to integrate your custom reward function (i.e., mapping a list of PIL images to reward scores). See the examples in `pipelines/vllm_generate.py` and `pipelines/choose_generate.py` for guidance.
 
 ---
 
