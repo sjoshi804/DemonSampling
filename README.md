@@ -6,7 +6,6 @@ Official implementation of Sampling Demon, arxiv:2410.05760
 Please run the following commands to install the required packages.
 ```
 conda env create -f environment.yml # The build takes 30 minutes on our machine :(
-pip install image-reward
 pip install -e .
 ```
 If torch versioning issue occur, remove torch-related packages and reinstall `pip3 install torch==2.2.1 torchvision==0.17.1 torchaudio==2.2.1` is a usual practice.
@@ -19,3 +18,7 @@ conda env export > environment.yml --no-builds
 ```
 
 ## Usage
+
+
+## Credits
+The aesthetics model checkpoint is from DDPO[https://github.com/kvablack/ddpo-pytorch/tree/main]. If you have any questions, please feel free to raise an issue or contact the ![author](https://x.com/rareone0602)
