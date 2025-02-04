@@ -280,7 +280,7 @@ def demon_sampling(x,
         next_xs = sde_step(x, t, prev_t, prompts, zs)
 
         if r_of_c == "consistency":
-            candidates_0 = consistency_sampling(next_xs, cond, sample_step=c_steps + 1, start_t=t)
+            candidates_0 = consistency_sampling(next_xs, cond, sample_step=2, start_t=t)
         elif r_of_c == "baseline":
             candidates_0 = odeint_rest(next_xs, t, ts, prompts, max_ode_steps=c_steps)
 

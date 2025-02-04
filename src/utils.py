@@ -4,7 +4,7 @@ from diffusers import AutoencoderKL
 from transformers import CLIPTextModel, CLIPTokenizer, CLIPTextModelWithProjection
 from tqdm import tqdm, trange
 
-from config import FILE_PATH, DTYPE, DEVICE
+from config import FILE_PATH, DTYPE, DEVICE, IMAGE_DIMENSION
 
 # Load tokenizers and text encoders.
 tokenizers = [
@@ -27,7 +27,7 @@ tensor_convert = transforms.ToTensor()
 @torch.inference_mode()
 def from_pil_to_latent(pil_img):
     """Convert a PIL image to a latent representation."""
-    pil_img = pil_img.resize((1024, 1024))
+    pil_img = pil_img.resize((IMAGE_DIMENSION, IMAGE_DIMENSION))
     img_tensor = tensor_convert(pil_img).unsqueeze(0).to(device=DEVICE, dtype=DTYPE)
     return encode(img_tensor)
 
