@@ -1,4 +1,4 @@
-name: llm_prompt
+name: sampling_demon
 channels:
   - conda-forge
   - pytorch
@@ -313,4 +313,3 @@ dependencies:
       - xxhash==3.4.1
       - yarl==1.9.4
       - zipp==3.18.0
-prefix: /home/rareone/miniconda3/envs/llm_prompt

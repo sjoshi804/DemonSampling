@@ -1,0 +1,26 @@
+# Core accelerator and distributed libraries
+accelerate==0.28.0
+
+# Diffusion and generative packages
+diffusers==0.25.1
+
+# The image reward model (which includes huggingface-hub as a dependency)
+image-reward==1.5
+hpsv2==1.2.0
+
+# Open‑clip packages
+open-clip-torch==2.24.0
+openai-clip==1.0.1
+
+# API wrapper
+openai==1.14.1
+google-generativeai==0.4.0
+
+# PyTorch and its audio/vision extensions
+torch==2.2.1
+torchaudio==2.2.1
+torchvision==0.17.1
+
+# Transformer models and utilities
+transformers==4.38.2
+huggingface_hub==0.28.1
