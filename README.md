@@ -26,7 +26,7 @@ This repository contains the official implementation of Sampling Demon, an infer
 
 Diffusion models have revolutionized image generation; however, aligning these models with diverse user preferences remains a significant challenge. Traditional approaches rely either on costly retraining or require differentiable reward functions, limiting their scope when using non-differentiable sources such as VLM APIs and human feedback.
 
-**Sampling Demon** overcomes these limitations by steering the denoising process via stochastic optimization at inference time. Inspired by Maxwell's Demon, our method evaluates multiple candidate noise perturbations and selectively synthesizes the ones that yield higher rewards. Our contributions include:
+**Sampling Demon** overcomes these limitations by steering the denoising process via stochastic optimization at inference time. Inspired by Maxwell's Demon, our method evaluates multiple candidate noise perturbations and selectively synthesizes the ones that yield higher rewards. Our contributions highlight:
 
 - **Backpropagation-Free Alignment:** Incorporate non-differentiable reward signals directly into the inference process.
 - **Plug-and-Play Integration:** Seamlessly integrate with existing diffusion models without additional training.
