@@ -107,8 +107,6 @@ condition = {
     "prompts": ["An astronaut riding a horse on Mars."],
     "cfgs": [5]
 }
-from PIL import Image
-pil = Image.open("assets/test_image.png")
 x = from_pil_to_latent(pil)
 x = oderevert(x, condition)
 x = odeint(x, condition, 20)
@@ -129,8 +127,6 @@ new_condition = {
 steps = 20
 sigma = 14
 beta = 0.125
-from PIL import Image
-pil = Image.open("assets/test_image.png")
 x = from_pil_to_latent(pil)
 x = oderevert(x, old_condition, start_t=sigma)
 x = sdeint(x, new_condition, beta, steps, start_t=sigma)
@@ -142,11 +138,11 @@ pil = from_latent_to_pil(x)
 ## Miscellaneous
 1. **For SDv1.5:**
     - Please switch to the `mini` branch for the SDv1.5-compatible version of the code.
-    - The pipeline is compatible with SDv1.5.
+    - `pipelines/` is compatible with SDv1.5.
 2. **Running the test:**
     - pytest is used for testing. To run the tests, use the command `pytest tests`
     - Specifically, the low-level API demonstration is identical to `tests/test_api.py`.
-    
+
 ---
 
 ## Credits and Acknowledgments
