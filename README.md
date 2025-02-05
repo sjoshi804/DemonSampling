@@ -186,8 +186,7 @@ pil = from_latent_to_pil(x)
 
 - **Aesthetic Model Checkpoint:** Provided by [DDPO](https://github.com/kvablack/ddpo-pytorch/tree/main).
 - **Safety Checker:** Utilizes the Stable Diffusion Safety Checker from CompVis.
-- **Contributors:**  
-  For questions or suggestions, please raise an issue or contact the [author](mailto:rareone0602@gmail.com).
+- **Contributors:**  For questions or suggestions, please raise an issue or contact the [author](mailto:rareone0602@gmail.com).
 
 ---
 
