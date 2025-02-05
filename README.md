@@ -1,6 +1,10 @@
 # Sampling Demon
 
-**Official implementation of "Sampling Demon" (arXiv:2410.05760).**
+**Official implementation of ICLR 2025 "Sampling Demon" (arXiv:2410.05760).**
+
+[![Python](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-3918/)
+[![MIT license](https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
+[![arXiv](https://img.shields.io/badge/arXiv-2310.05760-red)](https://arxiv.org/abs/2410.05760) 
 
 This repository contains the official implementation of Sampling Demon, an inference-time, backpropagation-free preference alignment method for diffusion models. By aligning the denoising process with user preferences via stochastic optimization, Sampling Demon enables the use of non-differentiable reward signals—such as those from Visual-Language Model (VLM) APIs and human judgements—without requiring retraining or fine-tuning of the underlying diffusion model.
 
@@ -86,7 +90,7 @@ generator = YourRewardGenerator(
 generator.generate(prompt=text)
 ```
 
-See the examples in `pipelines/vllm_generate.py` and `pipelines/choose_generate.py` for examples.
+See the examples in `pipelines/vllm_generate.py` and `pipelines/choose_generate.py`.
 
 ### Running Provided Pipelines
 
@@ -191,7 +195,7 @@ pil = from_latent_to_pil(x)
 
 If you find this code useful in your research, please consider citing our paper:
 
-```
+```bibtex
 @inproceedings{
 yeh2025trainingfree,
 title={Training-Free Diffusion Model Alignment with Sampling Demons},
@@ -201,8 +205,3 @@ year={2025},
 }
 ```
 
----
-
-## License
-
-This project is licensed under the Apache License 2.0 license. 
