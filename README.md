@@ -67,7 +67,7 @@ Develop your own pipeline by subclassing the `DemonGenerater` abstract class. Ov
 
 ```python
 class YourRewardGenerator(DemonGenerater):
-    def rewards(self, pils):
+    def rewards(self, pils: List[Image.Image]) -> List[float]:
         """
         Implement your custom reward function here.
         """
