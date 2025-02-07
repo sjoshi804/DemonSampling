@@ -1,4 +1,4 @@
-# Sampling Demon
+# [Sampling Demon](https://rareone0602.github.io/Demon_page/)
 
 **Official implementation of ICLR 2025 "Sampling Demon" (arXiv:2410.05760).**
 
