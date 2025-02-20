@@ -112,6 +112,8 @@ python pipelines/vllm_generate.py --model "gemini" --K 16 --T 128 --beta 0.1
 
 #### Running Manual Selection Pipeline
 
+![ui](https://github.com/user-attachments/assets/07a27b9d-5d85-49b7-bfec-c2e2b30515bd)
+
 Interact with the algorithm via the manual selection pipeline, which provides a user interface for selecting preferred outcomes:
 
 ```bash
