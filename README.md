@@ -80,8 +80,8 @@ generator = YourRewardGenerator(
         K=16,
         T=64,
         demon_type="tanh", # or "boltzmann", "optimal"
-        r_of_c="baseline", # or "consistency"
-        c_steps=20, # Meaningful only when r_of_c="baseline" 
+        r_of_c="consistency", # or "baseline"
+        # c_steps=20, # Meaningful only when r_of_c="baseline" 
         ode_after=0.11, # Recommended value for Stable Diffusion 
         cfg=2, # Recommended value in (0, 5]
         save_pils=True,
