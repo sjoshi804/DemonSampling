@@ -247,6 +247,9 @@ def demon_sampling(x,
     """
     Run the demon sampling process to refine latent x using reward feedback.
     """
+
+    USE_SDE_SAMPLING=True 
+                       
     if r_of_c not in ["baseline", "consistency"]:
         raise ValueError(f"Unknown r_of_c: {r_of_c}")
     if x.shape[0] != 1:
@@ -279,43 +282,49 @@ def demon_sampling(x,
         t, ts = ts[0], ts[1:]
         next_xs = sde_step(x, t, prev_t, prompts, zs)
 
-        if r_of_c == "consistency":
-            candidates_0 = consistency_sampling(next_xs, cond, sample_step=2, start_t=t)
-        elif r_of_c == "baseline":
-            candidates_0 = odeint_rest(next_xs, t, ts, prompts, max_ode_steps=c_steps)
-
-        values = torch.tensor(reward_fn(candidates_0),
-                              device=x.device,
-                              dtype=x.dtype)
-        passed_seconds = (datetime.now() - start_time).total_seconds()
-        if log_dir is not None:
-            with open(f"{log_dir}/expected_reward.txt", "a") as f:
-                f.write(f"{values.mean().item()} {values.std().item()} {t.item()} {passed_seconds}\n")
-
-        # Adaptive tau: update if necessary.
-        if tau == 'adaptive':
-            tau = values.std().item()
-
-        if demon_type == "tanh":
-            values = values - values.mean()
-            weights = torch.tanh(values / tau)
-        elif demon_type == "boltzmann":
-            stabilized_values = values - torch.max(values)
-            weights = F.softmax(stabilized_values / tau, dim=0)
-        elif demon_type == "optimal":
-            weights = values
+        z_final = None
+        if not USE_SDE_SAMPLING:
+            if r_of_c == "consistency":
+                candidates_0 = consistency_sampling(next_xs, cond, sample_step=2, start_t=t)
+            elif r_of_c == "baseline":
+                candidates_0 = odeint_rest(next_xs, t, ts, prompts, max_ode_steps=c_steps)
+    
+            values = torch.tensor(reward_fn(candidates_0),
+                                  device=x.device,
+                                  dtype=x.dtype)
+            passed_seconds = (datetime.now() - start_time).total_seconds()
+            if log_dir is not None:
+                with open(f"{log_dir}/expected_reward.txt", "a") as f:
+                    f.write(f"{values.mean().item()} {values.std().item()} {t.item()} {passed_seconds}\n")
+    
+            # Adaptive tau: update if necessary.
+            if tau == 'adaptive':
+                tau = values.std().item()
+    
+            if demon_type == "tanh":
+                values = values - values.mean()
+                weights = torch.tanh(values / tau)
+            elif demon_type == "boltzmann":
+                stabilized_values = values - torch.max(values)
+                weights = F.softmax(stabilized_values / tau, dim=0)
+            elif demon_type == "optimal":
+                weights = values
+            else:
+                raise ValueError(f"Unknown demon_type: {demon_type}")
+    
+            # Prevent division by zero or near-zero standard deviation.
+            if values.std().item() < 1e-8:
+                weights = torch.ones_like(weights)
+    
+            z_final = F.normalize(
+                (zs * weights.view(-1, 1, 1, 1)).sum(dim=0, keepdim=True),
+                dim=(0, 1, 2, 3)
+            )
+            z_final *= x.numel() ** 0.5
         else:
-            raise ValueError(f"Unknown demon_type: {demon_type}")
-
-        # Prevent division by zero or near-zero standard deviation.
-        if values.std().item() < 1e-8:
-            weights = torch.ones_like(weights)
-
-        z_final = F.normalize(
-            (zs * weights.view(-1, 1, 1, 1)).sum(dim=0, keepdim=True),
-            dim=(0, 1, 2, 3)
-        )
-        z_final *= x.numel() ** 0.5
+            # Just generate the final noise directly, no noise selection happening here
+            z_final = torch.randn_like(x)
+            
         x = sde_step(x, t, prev_t, prompts, z_final)
         prev_t = t
 
